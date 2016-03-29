@@ -1,0 +1,28 @@
+{
+  "name": "jquery.core.image.upload",
+  "version": "0.9.0",
+  "description": "a plugin for image upload",
+  "main": "jquery.core.image.upload.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vanthink-UED/jquery.core.image.upload.git"
+  },
+  "keywords": [
+    "jQuery",
+    "image",
+    "upload",
+    "crop"
+  ],
+  "author": "Jack Pu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Vanthink-UED/jquery.core.image.upload/issues"
+  },
+  "homepage": "https://github.com/Vanthink-UED/jquery.core.image.upload",
+  "dependencies": {
+    "jquery": "^2.2.2"
+  }
+}
