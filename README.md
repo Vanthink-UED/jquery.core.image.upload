@@ -34,13 +34,15 @@ $(.btn).CoreUpload({
 
 ### config Options
 
-+ `extensions:` limit the file type `@array` eg:`[jpg,png]`;`required`
++ `url` your server url `@string` rg:`./src/upload.php`;`required`;
+
++ `uploadedCallback:` after finish your uploading your callback `@function`;`required`;
 
 + `inputOfFile:` upload file form name `@string`;`required`
 
++ `extensions:` limit the file type `@array` eg:`[jpg,png]`;
+
 + `onSubmit:` when you uploading your file your function callback `@function`
 
-+ `uploadedCallback:` after finish your uploading your callback `@function`;`required`
-
-
++ `isAjax`: we support two upload:`ajax` And 'iframe'.`@boolean`,default:`true` 
 ### MIT LICENSE
