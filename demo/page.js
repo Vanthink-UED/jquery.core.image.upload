@@ -8,14 +8,18 @@ $(function() {
             alert(result);
         }
     });
+    
+    
     $(".js-btn-crop").coreImageUpload ({
-        url: "./upload.php",
+        url: "./crop.php",
         inputOfFile: 'image',
         enableCrop: true,
-        enableCrop: '1:1',
+        cropRatio: '1:1',
         uploadedCallback: function (result) {
-            alert(result);
+            alert( '裁剪成功! 图片宽高:' + result.data['toCropImgW'] + result.data['toCropImgH']);
         }
     });
+    
+    
     
 })

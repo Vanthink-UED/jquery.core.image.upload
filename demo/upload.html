@@ -26,8 +26,6 @@
 </div>
 <div class="content-wrapper">
     <div class="content pure-u-4-5">
-        <h2 class="content-head is-center">Let's Start!</h2>
-
         <div class="pure-g">
             <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
                 <h3 class="content-subhead">
@@ -48,6 +46,17 @@ $(".js-btn-upload").coreImageUpload ({
                     Crop Image and Upload
                 </h3>
                 <div class="pure-button pure-button-primary js-btn-crop">Crop Image</div>
+                                <pre><code>
+$(".js-btn-crop").coreImageUpload ({
+    url: "./crop.php",
+    inputOfFile: 'image',
+    enableCrop: true,
+    cropRatio: '1:1',
+    uploadedCallback: function (result) {
+        alert(result);
+    }
+});
+                </code></pre>
             </div>
         </div>
     </div>
@@ -57,6 +66,7 @@ $(".js-btn-upload").coreImageUpload ({
 <script src="//cdn.jsdelivr.net/highlight.js/9.2.0/highlight.min.js"></script>  
 <script>hljs.initHighlightingOnLoad();</script>
 <script src='http://s1.vued.vanthink.cn/d59f937c159f/jquery-2.2.1.min.js'></script>
+<script src="../src/jquery-ui.min.js"></script>
 <script src="../src/jquery.core.image.upload.js"></script>
 <script src="page.js"></script>
 </body>

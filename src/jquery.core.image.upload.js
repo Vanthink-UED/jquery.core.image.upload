@@ -10,7 +10,7 @@
     } else {
         factory(window.jQuery);
     }
-}(function ($, window, document) {
+}(function ($) {
 
     "use strict"; 
 
@@ -27,15 +27,18 @@
     // dialog for preview image and crop
     // @param files the input of type=file value
     // @param options 
-    var ImageBox = function (files,options) {
+    var ImageBox = function (files,options,func) {
        this.image = {
            file: files,
        }; 
+       this.options = options;  
+       this.uploadAction = func;
        if (files) {
             var reader = new FileReader();
-            var slef = this;
+            var self = this;
             reader.onload = function (e) {
-                self.image.src = e. e.target.result;
+                self.image.src = e.target.result;
+                self.show();
             }
             
             reader.readAsDataURL(files[0]);
@@ -43,7 +46,7 @@
         this.dialog = $('<div class="g-core-image-corp-container"></div>');
         this.imageAside = $('<div class="image-aside"></div>');
         this.infoAside = $('<div class="info-aside"></div>');
-        this.show();
+       // this.show();
 
     }
 
@@ -64,30 +67,27 @@
         initPic: function ($container) {
             var pic = new Image();
             
-            
+            pic.src = this.image.src;
             pic.onload = (function() {
-                this.image.width = pic.width;
-                this.image.height =pic.height;
-                this.reseyLayout(image);
+                console.log(pic.naturalWidth);
+                this.image.width = pic.naturalWidth;
+                this.image.height =pic.naturalHeight;
                 
+                this.reseyLayout(pic,$container);
+                this.showCropBox($container, 'create');
                 
             }).bind(this);
-            pic.src = this.image.src;
-            
-
-        },
-        
-        
-        reseyLayout: function(image) {
-            var H = $(window).height() - 80;
-            var W = $(window).width() - 380;
-            
+        },  
+        reseyLayout: function(image,$container) {
+            var H = window.innerHeight - 80;
+            var W = window.innerWidth - 60;
+            console.log(this.image.width);
             var imageWidth = this.image.width;
-            var imageHeight = this.image.width;
+            var imageHeight = this.image.height;
             var R = imageWidth / imageHeight;
             var Rs = W / H;
             if (R > Rs) {
-                this.pic.css({
+                $(image).css({
                     'width': W,
                     'height': W / R
                 });
@@ -99,7 +99,7 @@
                     });
                 }
             } else {
-                this.pic.css({
+                $(image).css({
                     'width': H * R,
                     'height': H
                 });
@@ -116,24 +116,18 @@
             } else {
                 $container.append(image);
             }
-            options.imgChangeRatio = imageWidth / image.width();
+            this.options.imgChangeRatio = imageWidth / image.width;
             // Options.changgedImgRatio=parseFloat(this.pic.width())/parseFloat(this.pic.height());
             //alert(Options.changgedImgRatio);
         },
 
         _bind: function () {
-            var me = this;
+            var self = this;
             this.btnUpload.on('click', function (e) {
-                if (Options.enableCrop) {
-                    return me.doCropEvent(e);
-                }
-                if (Options.uploadedCallback) {
-                    Options.uploadedCallback(me.response);
-                    me.hide();
-                }
+                 self.doCropEvent(e);
             });
             this.btnCancel.on('click', function () {
-                me.dialog.remove();
+                self.dialog.remove();
             });
         },
 
@@ -146,23 +140,6 @@
 
         },
 
-        outputConfigInfo: function () {
-            //this.setNotice(this.response);
-            if (Options.enableCrop) {
-                $title = $('<h4 class="task-name">图片裁剪</h4>');
-            } else {
-                $title = $('<h4 class="task-name">图片上传</h4>');
-            }
-            this.infoAside.append($title);
-            if (Options.enableCrop) {
-                this.infoAside.append('<p class="corp-info">' + Options.cropRatio + '</p>');
-                this.showThumbImage();
-            }
-            if (!Options.enableCrop)
-                this._outputImageDetails();
-
-
-        },
         setNotice: function (result) {
             this.notice = $('<div class="notice-info">' + result.errmsg + '</div>')
             if (!this.infoAside.find('notice-info').length) {
@@ -189,86 +166,21 @@
             this.infoAside.append($configInfo);
         },
 
-        showThumbImage: function () {
-            this.thumbImage = $('<img src="' + this.response.data.src + '"/>');
-            var $imageCorpPreview = $('<div class="image-corp-preview"></div>');
-            var ratioW = parseInt(Options.cropRatio.split(':')[0]);
-            ratioH = parseInt(Options.cropRatio.split(':')[1]);
-
-            $imageCorpPreview.append(this.thumbImage);
-            this.infoAside.append($imageCorpPreview);
-            //$imageCorpPreview.css('width',280);
-
-            if (ratioW < ratioH) {
-                $imageCorpPreview.css('height', $imageCorpPreview.width());
-                $imageCorpPreview.css('width', $imageCorpPreview.height() * ratioW / ratioH);
-                return;
-            }
-            $imageCorpPreview.css('height', $imageCorpPreview.width() * ratioH / ratioW);
-            var R = this.response.data.width / this.response.data.height;
-
-
-            this.thumbImage.css('width', $imageCorpPreview.width() / 80 * 100);
-            this.thumbImage.css('height', this.thumbImage.width() / R)
-                .css({
-                    'margin-top': -((this.thumbImage.height() - $imageCorpPreview.height()) / 2),
-                    'margin-left': -((this.thumbImage.width() - $imageCorpPreview.width()) / 2)
-                });
-
-        },
-        changeRatio: function (w, h) {
-            Options.cropRatio = w + ":" + h;
-            var selector = $(".select-recorte");
-            var sWidth = selector.width();
-            var sHeight = sWidth / parseInt(w) * parseInt(h);
-            if (sHeight > selector.parent().height()) {
-                sHeight = selector.parent().height();
-                sWidth = sHeight / parseInt(h) * parseInt(w);
-            }
-            selector.css({
-                "width": sWidth,
-                "height": sHeight
-            });
-
-            var x = selector.css('left');
-            var y = selector.css('top');
-            var w = selector.width();
-            var h = selector.height();
-            this.changeThumbImage(parseInt(x), parseInt(y), w, h);
-
-        },
-        changeThumbImage: function (x, y, w, h) {
-            var imageWidth = this.thumbImage.width();
-            var imageHeight = this.thumbImage.height();
-            var containerWidth = this.thumbImage.parent().width();
-            var containerHeight = this.thumbImage.parent().height();
-            var transformRatio = containerWidth / w;
-            this.thumbImage.parent().css("height", h * transformRatio);
-            this.thumbImage.css({
-                "width": this.pic.width() * transformRatio,
-                "height": this.pic.height() * transformRatio,
-                "margin-left": -(x * transformRatio),
-                "margin-top": -(y * transformRatio)
-            });
-
-
-        },
 
         _initCropBox: function () {
             this.imageAside.append('<div class="g-crop-image-box"><div class="g-crop-image-principal"><div></div>');
             var $principal = this.imageAside.find('.g-crop-image-principal');
             this.initPic($principal);
-            this.showCropBox($principal, 'create');
+            
         },
         // crop
         showCropBox: function ($wrap, state) {
             var $selectCrop = $('<div class="select-recorte"></div>');
             $wrap.append($selectCrop);
-            var response = this.response;
             var imageWidth = parseInt($wrap.css('width'));
             var imageHeight = parseInt($wrap.css('height'));
-            var ratioW = options.cropRatio.split(':')[0],
-                ratioH = options.cropRatio.split(':')[1];
+            var ratioW = this.options.cropRatio.split(':')[0],
+                ratioH = this.options.cropRatio.split(':')[1];
             var Swidth = (imageWidth / 100) * 80;
             var Sheight = (Swidth / ratioW) * ratioH;
             $selectCrop.css({
@@ -293,7 +205,7 @@
 
                 $selectCrop.resizable({
                     containment: "parent",
-                    aspectRatio: Options.cropRatio,
+                    aspectRatio: this.options.cropRatio,
                     minWidth: (Swidth / 100) * 10,
                     minHeight: (Sheight / 100) * 10,
                     resize: function (e) {
@@ -302,7 +214,6 @@
                         var y = ui.css('top');
                         var w = ui.width();
                         var h = ui.height();
-                        me.changeThumbImage(parseInt(x), parseInt(y), w, h);
 
                     }
                 });
@@ -314,7 +225,6 @@
                         var y = ui.css('top');
                         var w = ui.width();
                         var h = ui.height();
-                        me.changeThumbImage(parseInt(x), parseInt(y), w, h);
                     }
                 });
 
@@ -330,35 +240,24 @@
             thisBtn.text('裁剪中...');
 
             var $selectCrop = this.dialog.find('.select-recorte');
-            ratioW = Options.cropRatio.split(':')[0];
-            ratioH = Options.cropRatio.split(':')[1];
-            var data = this.response.data;
+            var ratioW = this.options.cropRatio.split(':')[0];
+            var ratioH = this.options.cropRatio.split(':')[1];
+            // 带入新的值
+            var data = {};
             data["request"] = "crop";
-            data["toCropImgX"] = parseInt($selectCrop.css('left')) * Options.imgChangeRatio;
-            data["toCropImgY"] = parseInt($selectCrop.css('top')) * Options.imgChangeRatio;
-            data["toCropImgW"] = $selectCrop.width() * Options.imgChangeRatio;
-            data["toCropImgH"] = $selectCrop.height() * Options.imgChangeRatio;
+            data["toCropImgX"] = parseInt($selectCrop.css('left')) * this.options.imgChangeRatio;
+            data["toCropImgY"] = parseInt($selectCrop.css('top')) * this.options.imgChangeRatio;
+            data["toCropImgW"] = $selectCrop.width() * this.options.imgChangeRatio;
+            data["toCropImgH"] = $selectCrop.height() * this.options.imgChangeRatio;
             data["maxWidth"] = $(".maxWidthHeight input[name='maxwidth']").val();
             data["maxHeight"] = $(".maxWidthHeight input[name='maxheight']").val();
             data["ratioW"] = ratioW;
             data["ratioH"] = ratioH;
-            data["currentFileName"] = data['src'];
-            data['fileType'] = this.response.data.type;
-            data['fileHash'] = this.response.data.hash;
             var me = this;
-            $.post(Options.actionToSubmitCrop, data, function (result) {
-                thisBtn.removeAttr("disabled");
-                thisBtn.text('确定裁剪');
-                if (!result.errno) {
-                    me.hide();
-                    Options.uploadedCallback(result);
-
-                } else {
-                    this.setNotice(result);
-                }
-
-            }, "JSON");
-        },
+            this.options.data = $.extend(this.options.data,data);
+            this.uploadAction();
+            
+        }
     };
     
     
@@ -540,7 +439,10 @@
                 options.files = e.target.files;
                 
                 if(options.enableCrop) {
-                    this.imageBoxObj = new ImageBox(e.target.files,options);
+                    
+                    
+                    self.imageBoxObj = new ImageBox(e.target.files,options,function() {self.tryAjaxUpload($form)});
+                    
                     return;
                 }
                 
@@ -579,7 +481,11 @@
                 contentType: false, 
                 success: function(data) {
                    form.find("input[type=file]").removeAttr("disabled");
-                    self.options.uploadedCallback(data)
+                   if(self.options.enableCrop) {
+                        self.imageBoxObj.hide();
+                        self.imageBoxObj = null;
+                   } 
+                   self.options.uploadedCallback(data)
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('ERRORS: ' + textStatus);
@@ -651,4 +557,4 @@
         uploadedCallback: function (response) {},    
 
     };
-})(jQuery, window, document));
+})(jQuery));
