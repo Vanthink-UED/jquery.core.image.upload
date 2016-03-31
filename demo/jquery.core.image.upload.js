@@ -557,4 +557,4 @@
         uploadedCallback: function (response) {},    
 
     };
-}));
+})(jQuery));

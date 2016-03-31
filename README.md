@@ -5,30 +5,15 @@ jquery.core.upload  是一款轻量级图片以及裁剪插件,支持无刷新�
 ### 快速开始
 
 ```js
-<script src="http://s1.vued.vanthink.cn/188f332f5204/core.upload.min.js"></script>
+<script src="./dist/jquery.core.image.upload.min.js"></script>
 
-
-// AMD
-define(['core.image.upload'],function(){
-
-  ...
-})
-
-$(.btn).CoreUpload({
-  extensions: [],
-  actionToSubmitUpload: "",
-  maximumSize: 1024,
-  enableMaximumSize: false,
-  enableButton: false,
-  enableDrag: false,
-  inputOfFile: 'file',
-  loadingObj: '',
-  uploadingFun: function() {
-
-  }
-
-})
-
+$(".js-btn-upload").coreImageUpload ({
+    url: "./upload.php",
+    inputOfFile: 'image',
+    uploadedCallback: function (result) {
+        alert(result);
+    }
+});
 
 ```
 
