@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Vanthink-UED/jquery.core.image.upload",
   "dependencies": {
+    "gulp-rename": "^1.2.2",
     "jquery": "^2.2.2"
   }
 }

@@ -18,6 +18,9 @@ gulp.task('minifycss',function(){
         return gulp.src(path['css'])
         .pipe(plumber())
         .pipe(minifycss())
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest('./dist/'));
 
 });
@@ -26,6 +29,9 @@ gulp.task('uglifyjs',function(){
         return gulp.src(path['js'])
         .pipe(plumber())
         .pipe(uglify({mangle:false}))
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest('./dist/'));
 
 });
