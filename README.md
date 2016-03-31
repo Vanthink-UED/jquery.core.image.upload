@@ -1,8 +1,8 @@
 # jquery.core.image.upload 
 
-jquery.core.upload  是一款轻量级图片以及裁剪插件,支持无刷新上传。
+jquery.core.upload   a plugin for image upload
 
-### 快速开始
+### how to use
 
 ```js
 <script src="./dist/jquery.core.image.upload.min.js"></script>
