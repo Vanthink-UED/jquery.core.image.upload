@@ -69,7 +69,6 @@
             
             pic.src = this.image.src;
             pic.onload = (function() {
-                console.log(pic.naturalWidth);
                 this.image.width = pic.naturalWidth;
                 this.image.height =pic.naturalHeight;
                 
@@ -81,7 +80,6 @@
         reseyLayout: function(image,$container) {
             var H = window.innerHeight - 80;
             var W = window.innerWidth - 60;
-            console.log(this.image.width);
             var imageWidth = this.image.width;
             var imageHeight = this.image.height;
             var R = imageWidth / imageHeight;
@@ -226,6 +224,9 @@
                         var w = ui.width();
                         var h = ui.height();
                     }
+                });
+                $('body>div').bind("dragstart", function(event, ui){
+                    event.stopPropagation();
                 });
 
             };
