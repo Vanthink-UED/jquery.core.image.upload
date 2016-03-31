@@ -4,6 +4,21 @@ jquery.core.upload   a plugin for image upload [Demo](http://events.jackpu.com/j
 
 ### how to use
 
+#### Node
+```bash
+npm i jquery.core.image.upload --save-dev
+```
+``` js
+<script src="./node_modules/jquery.core.image.upload/dist/jquery.core.image.upload.min.js"></script>
+```
+
+#### Git
+```bash
+git clone https://github.com/Vanthink-UED/jquery.core.image.upload.git
+```
+
+#### Basic Usage
+
 ```js
 <script src="./dist/jquery.core.image.upload.min.js"></script>
 
@@ -48,8 +63,9 @@ If you crop a image , your crop will send a request to your server with some cro
 + `maxHeight`: the maxium height of your target image 
 
 ``` javascript
-<script src="../src/jquery-ui.min.js"></script>
-
+<script src="./dist/jquery-ui.min.js"></script>
+// if you want ot support mobile touch
+<script src="./dist/jquery-ui.touch-pounch.min.js"></script>
 $(".js-btn-crop").coreImageUpload ({
     url: "./crop.php",
     inputOfFile: 'image',
@@ -60,5 +76,6 @@ $(".js-btn-crop").coreImageUpload ({
     }
 });
 ```
+Also We build a single file with full scripts in `dist/jquery.core.image.upload.full.min.js`
 
 ### MIT LICENSE

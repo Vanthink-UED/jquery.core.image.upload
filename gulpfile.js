@@ -7,6 +7,7 @@ var plumber = require('gulp-plumber');
 var less = require('gulp-less');
 var path = require('path'); 
 var gutil = require('gulp-util');
+var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var path = {
     'css':['./src/*.css'],
@@ -35,6 +36,11 @@ gulp.task('uglifyjs',function(){
         .pipe(gulp.dest('./dist/'));
 
 });
+gulp.task('concat', function() {
+  return gulp.src('./dist/*.js')
+    .pipe(concat('jquery.core.image.upload.full.min.js'))
+    .pipe(gulp.dest('./dist/'));
+});
 
-gulp.task('default',['uglifyjs','minifycss']);
+gulp.task('default',['uglifyjs','minifycss','concat']);
 
