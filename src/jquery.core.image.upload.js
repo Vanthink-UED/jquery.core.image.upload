@@ -3,14 +3,7 @@
  ** view doc https://github.com/Vanthink-UED/jquery.core.image.upload
  ******/
 
-;(function (factory) {
-    "use strict"; 
-    if (typeof define === 'function' && define.amd) {
-        define(['jquery'], factory);
-    } else {
-        factory(window.jQuery);
-    }
-}(function ($) {
+;(function ($) {
 
     "use strict"; 
 
@@ -558,4 +551,4 @@
         uploadedCallback: function (response) {},    
 
     };
-}));
+}(jQuery));
