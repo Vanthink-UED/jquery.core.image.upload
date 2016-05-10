@@ -263,9 +263,7 @@
         init: function () {
             
             var Options = this.options;
-            
-            
-            
+ 
            if (Options.url == "") {
                 return alert('options.url must be defined');
             }
@@ -275,10 +273,6 @@
             if (Options.inputOfFile == "") {
                 return alert('options.inputOfFile must be defined');
             }
-
-
-            
-
             var initUpload = function (element) {
                 element.css({
                     "cursor": "pointer",
@@ -393,18 +387,24 @@
             var $inputUpload = $form.find('input[type="file"]');
             
             $form.css("display", "none");
-
+       
             $form.css({
                 cursor: "pointer",
                 display: "block",
                 position: "absolute",
                 left: 0,
                 top: 0,
-                width: $el.width() <= 0 ? 132 : $el.width() + 30,
-                height: $el.height() <= 0 ? 32 : $el.height(),
+                width: parseInt($el.css('width')) <= 0 ? $el.width() : parseInt($el.css('width')),
+                height: parseInt($el.css('height')) <= 0 ? $el.height() : parseInt($el.css('height')),
                 cursor: "hand",
                 opacity: 0,
+                margin:0,
+                padding:0,
                 overflow: "hidden"
+            });
+            $inputUpload.css({
+                'width': '100%',
+                'height': '100%'
             });
             var self = this;
             $inputUpload.on("change", function (e) {
@@ -543,8 +543,8 @@
         // crop
         enableCrop: false,
         enableResize: true,
-        minimumWidthToResize: 1024,
-        minimumHeightToResize: 630,
+        minimumWidthToResize: 1,
+        minimumHeightToResize: 1,
         enableButton: false,
         cropRatio: '16:9',
         imgChangeRatio: '',
