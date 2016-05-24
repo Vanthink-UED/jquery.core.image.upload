@@ -5,7 +5,6 @@
 
 ;(function ($) {
 
-    "use strict"; 
 
     var pluginName = 'coreImageUpload';
 
@@ -119,6 +118,7 @@
             });
             this.btnCancel.on('click', function () {
                 self.dialog.remove();
+                $('.g-core-image-upload-element').find("input[type=file]").val('');  
             });
         },
 
@@ -479,7 +479,9 @@
                         self.imageBoxObj.hide();
                         self.imageBoxObj = null;
                    } 
-                   self.options.uploadedCallback(data)
+                    // empty input file    
+                   form.find("input[type=file]").val('');  
+                   self.options.uploadedCallback(data);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('ERRORS: ' + textStatus);
