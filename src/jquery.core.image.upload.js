@@ -363,9 +363,6 @@
             }
         },
         
-        
-        
-        
         // we need build a form
         __buildForm: function() {
             var $el = this.$el;
@@ -377,7 +374,7 @@
             var dataArr = [];
             if (typeof options.data === 'object') {
                 for(var key in options.data) {
-                    var str = '<input type="hidden" name=' + key + '> value="' + data[key] +  '"';
+                    var str = '<input type="hidden" name=' + key + '> value="' + options.data[key] +  '"';
                     dataArr.push(str);
                 }
             }
