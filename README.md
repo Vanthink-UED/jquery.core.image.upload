@@ -72,10 +72,10 @@ $(".js-btn-crop").coreImageUpload ({
     enableCrop: true,
     cropRatio: '1:1',
     uploadedCallback: function (result) {
-        alert( '裁剪成功! 图片宽高:' + result.data['toCropImgW'] + result.data['toCropImgH']);
+        alert( 'Success!:' + result.data['toCropImgW'] + result.data['toCropImgH']);
     }
 });
 ```
-Also We build a single file with full scripts in `dist/jquery.core.image.upload.full.min.js`
+Also We concat a single file with full scripts in `dist/jquery.core.image.upload.full.min.js`
 
 ### MIT LICENSE
