@@ -76,6 +76,7 @@
             var imageHeight = this.image.height;
             var R = imageWidth / imageHeight;
             var Rs = W / H;
+            var newWidth = W;
             if (R > Rs) {
                 $(image).css({
                     'width': W,
@@ -89,8 +90,9 @@
                     });
                 }
             } else {
+                newWidth = H * R;
                 $(image).css({
-                    'width': H * R,
+                    'width': newWidth,
                     'height': H
                 });
                 if ($container) {
@@ -106,9 +108,7 @@
             } else {
                 $container.append(image);
             }
-            this.options.imgChangeRatio = imageWidth / image.width;
-            // Options.changgedImgRatio=parseFloat(this.pic.width())/parseFloat(this.pic.height());
-            //alert(Options.changgedImgRatio);
+            this.options.imgChangeRatio = imageWidth / newWidth;
         },
 
         _bind: function () {
@@ -268,8 +268,6 @@
                 return alert('options.url must be defined');
             }
         
-
-            //  Options.DefaultImageButton = (Options.DefaultImageButton == "") ? Options.PluginFolderOnServer + OptionsIfEmpty.DefaultImageButton : Options.DefaultImageButton;
             if (Options.inputOfFile == "") {
                 return alert('options.inputOfFile must be defined');
             }
@@ -441,7 +439,6 @@
                     self.tryAjaxUpload($form);    
                 }
                 $form.find("input[type=file]").attr("disabled", "disabled")
-               // $form.submit();
             });
             $el.append($form);
              
