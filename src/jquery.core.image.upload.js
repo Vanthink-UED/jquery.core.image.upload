@@ -4,17 +4,13 @@
  ******/
 
 ;(function ($) {
-
-
     var pluginName = 'coreImageUpload';
 
     function Plugin(element, options) {
-
         this.$el = $(element);
         this.options = $.extend({}, $.fn[pluginName].defaults, options);
         this.init();
     }
-    
     
     // dialog for preview image and crop
     // @param files the input of type=file value
@@ -38,7 +34,6 @@
         this.dialog = $('<div class="g-core-image-corp-container"></div>');
         this.imageAside = $('<div class="image-aside"></div>');
         this.infoAside = $('<div class="info-aside"></div>');
-       // this.show();
 
     }
 
@@ -230,9 +225,7 @@
         doCropEvent: function (e) {
             var thisBtn = $(e.target);
             thisBtn.attr("disabled", "disabled");
-
             thisBtn.text('裁剪中...');
-
             var $selectCrop = this.dialog.find('.select-recorte');
             var ratioW = this.options.cropRatio.split(':')[0];
             var ratioH = this.options.cropRatio.split(':')[1];
@@ -255,13 +248,8 @@
     };
     
     
-    
     var methods = {
-        clear: function (Options) {
-           
-        },
         init: function () {
-            
             var Options = this.options;
  
            if (Options.url == "") {
@@ -298,7 +286,6 @@
                 var $inputHidden = $("<input type='hidden' name='" + Options.InputOfImageDirectory + "' id='" + Options.InputOfImageDirectory + "'>");
                 $inputHidden.addClass("picture-element-image-directory");
                 element.append($inputHidden);
-                //$inputHidden.attr(Options.InputOfImageDirectoryAttr);
             };
             var getExt = function (name) {
                 return name.slice(name.lastIndexOf(".") + 1);
@@ -329,9 +316,7 @@
                         $loading.remove();
                         $loading = '';
                         var response = $.parseJSON(response);
-                        
-
-
+  
                     }
                 });
                 element.find(":file[name='" + Options.inputOfFile + "']").mouseenter(function () {
@@ -340,10 +325,6 @@
                     element.removeClass("TuyoshiImageUpload_div")
                 })
             };
-
-            
-
-
 
             initUpload(this.$el);
             

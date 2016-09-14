@@ -1,6 +1,6 @@
 {
   "name": "jquery.core.image.upload",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "a plugin for image upload",
   "main": "jquery.core.image.upload.js",
   "scripts": {
