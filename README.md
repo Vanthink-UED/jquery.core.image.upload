@@ -1,6 +1,6 @@
 # jquery.core.image.upload 
 
-jquery.core.upload   a plugin for image upload [Demo](http://events.jackpu.com/jquery.core.image.upload/upload.html)
+jquery.core.upload   a plugin for image upload [Demo](http://vanthink-ued.github.io/jquery.core.image.upload/upload.html)
 
 ### how to use
 
